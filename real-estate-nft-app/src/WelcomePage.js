@@ -1,9 +1,6 @@
 // WelcomePage.js
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-// Import ethers as a whole object
-// Note: You might need to check your ethers version, as newer versions might have changes
-// If the issue persists, consider using the specific import syntax (e.g., import { Web3Provider } from 'ethers/providers';)
 const { providers } = ethers;
 
 const WelcomePage = ({ history }) => {
@@ -11,22 +8,17 @@ const WelcomePage = ({ history }) => {
 
   const connectToMetaMask = async () => {
     try {
-      // Check if MetaMask is installed
       if (window.ethereum) {
-        // Request account access if needed
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
         if (accounts.length > 0) {
-          // Use the providers object from ethers
           const provider = new providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
-
-          // Get the connected account
           const connectedAccount = await signer.getAddress();
           setAccount(connectedAccount);
 
-          // Navigate to another page after successful connection
-          history.push('/welcome');
+          // Update the line below to redirect to '/loggedin' instead of '/welcome'
+          history.push('/loggedin');
         } else {
           console.error('User denied account access');
         }
@@ -38,29 +30,59 @@ const WelcomePage = ({ history }) => {
     }
   };
 
+  const handleNavigation = (path) => {
+    // You can add logic here for additional functionality if needed
+    history.push(path);
+  };
+
   return (
-    <div>
-      {account ? (
-        // If an account is connected, show welcome message and account address
-        <div>
-          <h1>Welcome!</h1>
-          <p>Connected Account: {account}</p>
-          {/* Add more content here for the logged-in state */}
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#add8e6' }}>
+      {/* Navbar */}
+      <nav style={{ backgroundColor: '#333', padding: '10px', textAlign: 'center' }}>
+        <h2 style={{ margin: '0', color: 'white' }}>Real Estate NFT App</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '10px' }}>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }} onClick={() => handleNavigation('/')}>
+            <span onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                  onMouseLeave={(e) => e.target.style.textDecoration = 'none'}>
+              Home
+            </span>
+          </a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }} onClick={() => handleNavigation('/about-us')}>
+            <span onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                  onMouseLeave={(e) => e.target.style.textDecoration = 'none'}>
+              About Us
+            </span>
+          </a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }} onClick={() => handleNavigation('/contact-us')}>
+            <span onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                  onMouseLeave={(e) => e.target.style.textDecoration = 'none'}>
+              Contact Us
+            </span>
+          </a>
         </div>
-      ) : (
-        // If no account is connected, show a message to connect
-        <div>
-          <h1>Welcome to the Real Estate NFT App</h1>
-          <p>Please connect your MetaMask account to continue.</p>
-          {/* You can add a button or link to trigger the MetaMask connection */}
-          <button onClick={connectToMetaMask}>Connect with MetaMask</button>
-        </div>
-      )}
+      </nav>
+
+      {/* Content */}
+      <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        {account ? (
+          <div>
+            <h1>Welcome!</h1>
+            <p>Connected Account: {account}</p>
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center' }}>
+            <h1>Welcome to the Real Estate NFT App</h1>
+            <p>Please connect your MetaMask account to continue.</p>
+            <button onClick={connectToMetaMask} style={{ margin: '10px' }}>Connect with MetaMask</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default WelcomePage;
+
 
 
 
