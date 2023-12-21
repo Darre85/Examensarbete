@@ -1,4 +1,3 @@
-// LoggedInPage.js
 import React, { useEffect, useState } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import Web3 from 'web3';
@@ -31,27 +30,29 @@ const LoggedInPage = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        color: 'black',
+        justifyContent: 'flex-start', // Move content to the top
+        color: 'white',
+        padding: '40px 20px',
+        position: 'relative',
       }}
     >
-      <h1>Welcome!</h1>
-      <p>Connected Account: <strong>{walletAddress}</strong></p>
+      <h1 style={{ fontSize: '3em', marginBottom: '20px' }}>Welcome!</h1>
+      <p style={{ fontSize: '1.2em', marginBottom: '20px' }}>Connected Account: <strong>{walletAddress}</strong></p>
 
       {/* Navigation Links */}
       <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '40px' }}>
         <Link to="/marketplace" style={{
-          color: 'black',
+          color: 'white',
           textDecoration: 'none',
           fontSize: '24px',
-          border: '2px solid black',
+          border: '2px solid white',
           padding: '10px 20px',
           borderRadius: '10px',
           marginRight: '20px',
@@ -59,10 +60,10 @@ const LoggedInPage = () => {
           Marketplace
         </Link>
         <Link to="/assets" style={{
-          color: 'black',
+          color: 'white',
           textDecoration: 'none',
           fontSize: '24px',
-          border: '2px solid black',
+          border: '2px solid white',
           padding: '10px 20px',
           borderRadius: '10px',
           marginLeft: '20px',

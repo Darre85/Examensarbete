@@ -39,33 +39,46 @@ const WelcomePage = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',  // Set minHeight to ensure the image covers the entire page
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        justifyContent: 'center',
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden',
       }}
     >
-   {/* Content */}
+      {/* Background Image with Overlay */}
       <div
         style={{
-          flex: '1',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          zIndex: -1, // Move the overlay to the background
+        }}
+      />
+
+      {/* Content */}
+      <div
+        style={{
+          zIndex: 1, // Ensure the content is above the overlay
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginTop: '20vh',
+          justifyContent: 'center',
+          color: 'white',
+          marginTop: '20vh', // Adjusted to move the content up
         }}
       >
-        <h1 style={{ color: 'white', fontFamily: 'Arial, sans-serif', marginBottom: '20px' }}>
+        <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '3em', marginBottom: '20px' }}>
           Welcome to the Real Estate NFT App
         </h1>
         <button
           onClick={connectToMetaMask}
           style={{
             padding: '10px 20px',
-            fontSize: '16px',
+            fontSize: '1.2em', // Adjusted font size
             backgroundColor: '#333',
             color: 'white',
             border: 'none',
